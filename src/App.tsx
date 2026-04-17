@@ -6,7 +6,7 @@ export function App() {
 
   return (
     <div>
-      <h1>Hello, {name}</h1>
+      <h1>Hola, {name}</h1>
       <p>
         <label>
           Your name:{' '}
