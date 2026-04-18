@@ -54,7 +54,11 @@
         s.setAttribute('data-github-client-id', 'Ov23lijbc9rZ5Vi9o9F2');
         s.setAttribute('data-github-repo', 'MarcusRobbins/OSSKanban');
         s.setAttribute('data-github-auth-proxy', 'https://chorus-auth-proxy.marcusrobbins58.workers.dev');
-        s.setAttribute('data-openai-model', 'gpt-4o');
+        // Auto-open a branch-preview iframe on boot (full-screen). It shrinks
+        // to a windowed frame when the chorus panel opens, so both the panel
+        // and the previewed page are visible at once. See chorus README for
+        // data-auto-preview semantics.
+        s.setAttribute('data-auto-preview', 'true');
         s.setAttribute('data-debug', 'true');
         document.body.appendChild(s);
       } catch (err) {
