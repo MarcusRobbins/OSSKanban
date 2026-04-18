@@ -5,7 +5,7 @@ export function Counter() {
   return (
     <button 
       onClick={() => setN((x) => x + 1)}
-      style={{ backgroundColor: 'orange', border: '1px solid blue' }}
+      style={{ backgroundColor: 'orange', border: '1px solid blue2' }}
     >
       Clicked {n} {n === 1 ? 'time' : 'times'}
     </button>
