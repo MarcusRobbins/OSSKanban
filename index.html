@@ -36,45 +36,52 @@
   <div id="root"></div>
   <script type="module" src="./bootstrap.js"></script>
 
-  <!-- Chorus loader. Bootstraps the widget + switcher from chorus's main branch
-       via jsDelivr. A per-load cache-buster query forces browsers to fetch
-       fresh JS while chorus is under active development; once we pin to a
-       version tag this can go back to a static <script> tag. -->
+  <!-- Chorus loader. Resolves the latest commit on the chorus `main` branch,
+       then loads widget + switcher via jsDelivr's commit-SHA URL form — that
+       form is immutable (cached forever under a unique key), so we always get
+       the freshly-pushed code and never hit edge-cache staleness. -->
   <script>
-    (function () {
-      var BASE = 'https://cdn.jsdelivr.net/gh/MarcusRobbins/chorus@main';
-      var v = Date.now().toString(36);
-      var scripts = [
-        {
-          src: '/packages/widget/widget.js',
-          id: 'oss-kanban-widget',
-          data: {
-            'github-client-id': 'Ov23lijbc9rZ5Vi9o9F2',
-            'github-repo': 'MarcusRobbins/OSSKanban',
-            'github-auth-proxy': 'https://chorus-auth-proxy.marcusrobbins58.workers.dev',
-            'openai-model': 'gpt-4o',
-            'debug': 'true',
-          },
-        },
-        {
-          src: '/packages/switcher/switcher.js',
-          id: 'oss-kanban-switcher',
-          data: {
-            'github-repo': 'MarcusRobbins/OSSKanban',
-            'debug': 'true',
-          },
-        },
-      ];
-      scripts.forEach(function (cfg) {
-        var s = document.createElement('script');
-        s.type = 'module';
-        s.id = cfg.id;
-        s.src = BASE + cfg.src + '?v=' + v;
-        Object.keys(cfg.data).forEach(function (k) {
-          s.setAttribute('data-' + k, cfg.data[k]);
+    (async function () {
+      try {
+        var apiRes = await fetch('https://api.github.com/repos/MarcusRobbins/chorus/commits/main', {
+          headers: { 'Accept': 'application/vnd.github+json' },
         });
-        document.body.appendChild(s);
-      });
+        var sha = (await apiRes.json()).sha;
+        var BASE = 'https://cdn.jsdelivr.net/gh/MarcusRobbins/chorus@' + sha;
+        var scripts = [
+          {
+            src: '/packages/widget/widget.js',
+            id: 'oss-kanban-widget',
+            data: {
+              'github-client-id': 'Ov23lijbc9rZ5Vi9o9F2',
+              'github-repo': 'MarcusRobbins/OSSKanban',
+              'github-auth-proxy': 'https://chorus-auth-proxy.marcusrobbins58.workers.dev',
+              'openai-model': 'gpt-4o',
+              'debug': 'true',
+            },
+          },
+          {
+            src: '/packages/switcher/switcher.js',
+            id: 'oss-kanban-switcher',
+            data: {
+              'github-repo': 'MarcusRobbins/OSSKanban',
+              'debug': 'true',
+            },
+          },
+        ];
+        scripts.forEach(function (cfg) {
+          var s = document.createElement('script');
+          s.type = 'module';
+          s.id = cfg.id;
+          s.src = BASE + cfg.src;
+          Object.keys(cfg.data).forEach(function (k) {
+            s.setAttribute('data-' + k, cfg.data[k]);
+          });
+          document.body.appendChild(s);
+        });
+      } catch (err) {
+        console.error('[chorus-loader] failed to resolve latest commit:', err);
+      }
     })();
   </script>
 </body>
