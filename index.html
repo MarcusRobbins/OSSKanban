@@ -34,7 +34,7 @@
 <body>
   <div id="boot-status">Booting…</div>
   <div id="root"></div>
-  <script type="module" src="./bootstrap.js"></script>
+  <script>(function(){var cb=new URL(location.href).searchParams.get("t")||Date.now().toString(36);var s=document.createElement("script");s.type="module";s.src="./bootstrap.js?_cb="+cb;document.body.appendChild(s);})();</script>
 
   <!-- Chorus loader. Resolves the latest commit on the chorus `main` branch,
        then loads widget + switcher via jsDelivr's commit-SHA URL form — that
