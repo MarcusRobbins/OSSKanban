@@ -1,3 +1,5 @@
+import { Counter } from './Counter';
+
 export function App() {
   return (
     <div>
@@ -10,6 +12,10 @@ export function App() {
           <li><a href="./contact.html">Contact</a></li>
         </ul>
       </nav>
+      <section style={{ marginTop: '2rem' }}>
+        <h2>Counter</h2>
+        <Counter />
+      </section>
     </div>
   );
 }
