@@ -14,7 +14,10 @@ export function App() {
       </nav>
       <section style={{ marginTop: '2rem' }}>
         <h2>Counter</h2>
-        <Counter />
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <Counter />
+          <button type="button">testywesty</button>
+        </div>
       </section>
     </div>
   );
