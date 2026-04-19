@@ -1,26 +1,15 @@
-import { useState } from 'react';
-import { Counter } from './Counter';
-
 export function App() {
-  const [name, setName] = useState('world');
-
   return (
     <div>
-      <h1>Hello, {name}</h1>
-      <p>
-        <label>
-          Your name:{' '}
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-      </p>
-      <Counter />
-      <p style={{ marginTop: '2rem', color: '#666', fontSize: '0.875rem' }}>
-        This page was compiled in your browser from <code>.tsx</code> files
-        served statically. No build step, no bundler ran ahead of time.
-      </p>
+      <h1>Welcome</h1>
+      <p>Please use the menu below to visit different pages.</p>
+      <nav aria-label="Main menu" style={{ marginTop: '1.5rem' }}>
+        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', gap: '1rem' }}>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </nav>
     </div>
   );
 }
